@@ -30,7 +30,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Ellipse Width="14" Height="14" Fill="{x:Bind IsRemembered, Mode=OneWay, Converter={StaticResource RememberedConverter}}"></Ellipse> 
-                    <TextBlock Text="{x:Bind JapaneseHan}" Grid.Column="1" Style="{ThemeResource ListTitleStyle}"/>
+                    <TextBlock Text="{x:Bind JapaneseHan}" VerticalAlignment="Center" Grid.Column="1" Style="{ThemeResource ListTitleStyle}"/>
                 </Grid>
             </SwipeControl>
         </DataTemplate>
