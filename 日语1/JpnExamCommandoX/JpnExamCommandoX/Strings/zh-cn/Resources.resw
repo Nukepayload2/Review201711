@@ -126,7 +126,7 @@
     <comment>No selection text for Symbols</comment>
   </data>
   <data name="PivotItem_Symbols.Header" xml:space="preserve">
-    <value>符号</value>
+    <value>单词</value>
     <comment>Pivot item header for Symbols</comment>
   </data>
   <data name="ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty" xml:space="preserve">

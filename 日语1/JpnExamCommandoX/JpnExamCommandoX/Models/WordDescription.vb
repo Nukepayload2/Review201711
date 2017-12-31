@@ -1,4 +1,9 @@
-﻿Namespace Models
+﻿Imports JpnExamCommandoX.Helpers
+Imports JpnExamCommandoX.Services
+Imports JpnExamCommandoX.ViewModels
+Imports Newtonsoft.Json
+
+Namespace Models
 
     Public Class WordDescription
         Implements INotifyPropertyChanged
@@ -26,9 +31,13 @@
                 If Not _IsRemembered.Equals(Value) Then
                     _IsRemembered = Value
                     RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(NameOf(IsRemembered)))
+                    Dim tsk = WordDataService.SaveModelDataAsync(Singleton(Of WordsViewModel).Instance.SampleItems)
                 End If
             End Set
         End Property
+
+        <JsonIgnore>
+        Public ReadOnly Property ToggleRememberedCommand As New RelayCommand(Sub() IsRemembered = Not IsRemembered)
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
     End Class

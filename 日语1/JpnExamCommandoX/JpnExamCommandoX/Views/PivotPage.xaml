@@ -8,7 +8,7 @@
     xmlns:views="using:JpnExamCommandoX.Views"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition/>

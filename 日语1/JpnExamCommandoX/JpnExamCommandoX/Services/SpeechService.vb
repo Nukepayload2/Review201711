@@ -71,11 +71,13 @@ Namespace Services
             Do While status.IsBrainWashing
                 For i = defaultIndex To data.Count - 1
                     Dim mdl = data(i)
+                    If mdl.IsRemembered Then Continue For
                     Await PlayAsync(mdl.Japanese, mdl.ChineseTip, String.Empty, status)
                     If Not status.IsBrainWashing Then
                         Exit Do
                     End If
                 Next
+                Await Task.Delay(100)
                 defaultIndex = 0
             Loop
             req.RequestRelease()

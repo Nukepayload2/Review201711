@@ -126,6 +126,7 @@
     <Compile Include="Activation\ActivationHandler.vb" />
     <Compile Include="Models\PlayStatus.vb" />
     <Compile Include="Models\WordDescription.vb" />
+    <Compile Include="Helpers\RememberedConverter.vb" />
     <Compile Include="Services\ActivationService.vb" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.vb" />
   </ItemGroup>

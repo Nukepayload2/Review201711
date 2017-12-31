@@ -7,14 +7,32 @@
     Style="{StaticResource PageStyle}"
     NavigationCacheMode="Required"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:hlp="using:JpnExamCommandoX.Helpers"
     xmlns:model="using:JpnExamCommandoX.Models"
     xmlns:views="using:JpnExamCommandoX.Views"
     mc:Ignorable="d">
     <Page.Resources>
+        <hlp:RememberedConverter x:Key="RememberedConverter"/>
         <DataTemplate x:Key="ItemTemplate" x:DataType="model:WordDescription">
-            <Grid Height="64" Padding="0,8" VerticalAlignment="Center">
-                <TextBlock Text="{x:Bind JapaneseHan}" Style="{ThemeResource ListTitleStyle}"/>
-            </Grid>
+            <SwipeControl Margin="-10,2">
+                <SwipeControl.RightItems>
+                    <SwipeItems Mode="Execute">
+                        <SwipeItem Text="切换已掌握" Command="{x:Bind ToggleRememberedCommand}" BehaviorOnInvoked="Close">
+                            <SwipeItem.IconSource>
+                                <SymbolIconSource Symbol="Bookmarks"/>
+                            </SwipeItem.IconSource>
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeControl.RightItems>
+                <Grid Height="64" Padding="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Width="14" Height="14" Fill="{x:Bind IsRemembered, Mode=OneWay, Converter={StaticResource RememberedConverter}}"></Ellipse> 
+                    <TextBlock Text="{x:Bind JapaneseHan}" Grid.Column="1" Style="{ThemeResource ListTitleStyle}"/>
+                </Grid>
+            </SwipeControl>
         </DataTemplate>
 
         <DataTemplate x:Key="DetailsTemplate">
@@ -36,6 +54,12 @@
             DetailsTemplate="{StaticResource DetailsTemplate}"
             NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
             BorderBrush="Transparent" >
+            <controls:MasterDetailsView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </controls:MasterDetailsView.ItemContainerStyle>
         </controls:MasterDetailsView>
     </Grid>
 </Page>
