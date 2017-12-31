@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="JpnExamCommandoX.Views.WordsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    NavigationCacheMode="Required"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:model="using:JpnExamCommandoX.Models"
+    xmlns:views="using:JpnExamCommandoX.Views"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="ItemTemplate" x:DataType="model:WordDescription">
+            <Grid Height="64" Padding="0,8" VerticalAlignment="Center">
+                <TextBlock Text="{x:Bind JapaneseHan}" Style="{ThemeResource ListTitleStyle}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DetailsTemplate">
+            <views:WordDetailControl MasterMenuItem="{Binding}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NoSelectionContentTemplate">
+            <TextBlock x:Uid="Symbols_NoSelection" Style="{StaticResource ListNoSelectionTextStyle}" />
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Margin="-8,0">
+        <MediaPlayerElement AutoPlay="True" x:Name="wmp" Visibility="Collapsed"/>
+        <controls:MasterDetailsView
+            x:Name="MasterDetailsViewControl"
+            ItemsSource="{x:Bind ViewModel.SampleItems, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            DetailsTemplate="{StaticResource DetailsTemplate}"
+            NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
+            BorderBrush="Transparent" >
+        </controls:MasterDetailsView>
+    </Grid>
+</Page>
