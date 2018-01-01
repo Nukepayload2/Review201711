@@ -109,6 +109,7 @@ Namespace Services
                     Dim playCn =
                         Sub()
                             AddHandler wmp.MediaPlayer.MediaEnded, cnHandler
+                            TryCast(wmp.Source, IDisposable)?.Dispose()
                             wmp.Source = MediaSource.CreateFromStream(cnStrm, cnStrm.ContentType)
                         End Sub
                     Dim fakeCnHandler As TypedEventHandler(Of MediaPlayer, System.Object) =
@@ -123,11 +124,13 @@ Namespace Services
                         playCn()
                     Else
                         AddHandler wmp.MediaPlayer.MediaEnded, fakeCnHandler
+                        TryCast(wmp.Source, IDisposable)?.Dispose()
                         wmp.Source = MediaSource.CreateFromStream(fkCnStrm, fkCnStrm.ContentType)
                     End If
                 End Sub)
             End Sub
             AddHandler wmp.MediaPlayer.MediaEnded, handler
+            TryCast(wmp.Source, IDisposable)?.Dispose()
             wmp.Source = ja
             Do While waiting
                 Await Task.Delay(1)
