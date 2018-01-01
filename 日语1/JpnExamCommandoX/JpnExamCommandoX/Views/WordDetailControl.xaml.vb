@@ -24,7 +24,7 @@ Namespace Views
 
         Public Shared ReadOnly MasterMenuItemProperty As DependencyProperty = DependencyProperty.Register("MasterMenuItem", GetType(WordDescription), GetType(WordDetailControl), New PropertyMetadata(Nothing, AddressOf OnMasterMenuItemPropertyChanged))
 
-        Dim speech As New SpeechService
+        Dim speech As SpeechService = Singleton(Of SpeechService).Instance
 
         Private Shared Sub OnMasterMenuItemPropertyChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim control = TryCast(d, WordDetailControl)

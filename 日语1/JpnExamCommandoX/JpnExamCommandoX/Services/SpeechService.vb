@@ -31,19 +31,21 @@ Namespace Services
             status.IsPlaying = True
             Dim idle = status.IsPlayerIdle
             status.IsPlayerIdle = False
+            Dim fkCnStrm As SpeechSynthesisStream = Nothing
             Try
                 If Not Await CheckSpeechPrerequisiteAsync() Then
                     Return
                 End If
-                Dim jaStrm = Await _speechJp.SynthesizeTextToStreamAsync(japanese)
-                Dim cnStrm = Await _speechCn.SynthesizeTextToStreamAsync(chineseTip)
-                Dim fkCnStrm As SpeechSynthesisStream = Nothing
-                If Not String.IsNullOrEmpty(chinese) Then
-                    fkCnStrm = Await _speechCn.SynthesizeTextToStreamAsync(chinese)
-                End If
-                Await PlaySpeechCore(wmp, jaStrm, cnStrm, fkCnStrm)
+                Using jaStrm = Await _speechJp.SynthesizeTextToStreamAsync(japanese),
+                       cnStrm = Await _speechCn.SynthesizeTextToStreamAsync(chineseTip)
+                    If Not String.IsNullOrEmpty(chinese) Then
+                        fkCnStrm = Await _speechCn.SynthesizeTextToStreamAsync(chinese)
+                    End If
+                    Await PlaySpeechCore(wmp, jaStrm, cnStrm, fkCnStrm)
+                End Using
             Finally
                 status.IsPlaying = False
+                fkCnStrm?.Dispose()
             End Try
             status.IsPlayerIdle = idle
         End Function
@@ -130,9 +132,6 @@ Namespace Services
             Do While waiting
                 Await Task.Delay(1)
             Loop
-            jaStrm.Dispose()
-            cnStrm.Dispose()
-            fkCnStrm?.Dispose()
         End Function
 
     End Class
